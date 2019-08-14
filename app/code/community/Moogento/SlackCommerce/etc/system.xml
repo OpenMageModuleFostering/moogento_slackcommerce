@@ -3,7 +3,7 @@
     <tabs>
         <moogento translate="label">
             <label>
-                <![CDATA[<img src="//www.moogento.com/logo/moogento_tinylogo.lp.png" alt="Moogento" width="20" style="vertical-align:bottom;margin-left:-1px;"/> MOOGENTO Extensions
+                <![CDATA[<img src="//moogento.com/logo/moogento_tinylogo.lp.png" alt="Moogento" width="20" style="vertical-align:bottom;margin-left:-1px;"/> MOOGENTO Extensions
 				]]>
             </label>
             <sort_order>300</sort_order>
@@ -18,7 +18,7 @@
             <frontend_type>text</frontend_type>
             <sort_order>5600</sort_order>
             <show_in_default>1</show_in_default>
-            <show_in_website>0</show_in_website>
+            <show_in_website>1</show_in_website>
             <show_in_store>1</show_in_store>
             <groups>
                 <hint>
@@ -33,7 +33,7 @@
                     <frontend_type>text</frontend_type>
                     <sort_order>20</sort_order>
                     <show_in_default>1</show_in_default>
-                    <show_in_website>0</show_in_website>
+                    <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                     <fields>
                         <webhook_url translate="label" module="moogento_slackcommerce">
@@ -59,7 +59,7 @@
                             <show_in_store>0</show_in_store>
 							<comment><![CDATA[Set this to a channel already setup in your Slack account<br />Eg. <b>#orders</b>]]></comment>
                         </default_channel>
-                        <default_channel_fails translate="label" module="moogento_slackcommerce">
+<!--                        <default_channel_fails translate="label" module="moogento_slackcommerce">
                             <label><![CDATA[Default Fails Channel]]></label>
                             <frontend_type>text</frontend_type>
                             <sort_order>25</sort_order>
@@ -67,7 +67,7 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
 							<comment><![CDATA[Set this to a channel already setup in your Slack account<br />Eg. <b>#orders</b>]]></comment>
-                        </default_channel_fails>
+                        </default_channel_fails>-->
                         <test_connection translate="label">
                             <label></label>
                             <frontend_type>button</frontend_type>
@@ -100,8 +100,8 @@
                     <frontend_type>text</frontend_type>
                     <sort_order>110</sort_order>
                     <show_in_default>1</show_in_default>
-                    <show_in_website>0</show_in_website>
-                    <show_in_store>0</show_in_store>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
                     <frontend_model>moogento_slackcommerce/adminhtml_system_config_notifications</frontend_model>
                 </notifications>
 
@@ -114,6 +114,26 @@
                     <show_in_store>0</show_in_store>
                     <frontend_model>moogento_slackcommerce/adminhtml_system_config_stats</frontend_model>
                 </stats>
+				
+                <security translate="label" module="moogento_slackcommerce">
+                    <label>Security Notifications</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>130</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <frontend_model>moogento_slackcommerce/adminhtml_system_config_security</frontend_model>
+                </security>
+
+                <!--<fails_statistic translate="label" module="moogento_slackcommerce">
+                    <label>Fails Statistic Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>140</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <frontend_model>moogento_slackcommerce/adminhtml_system_config_failsstatistic</frontend_model>
+                </fails_statistic>-->
 
             </groups>
         </moogento_slackcommerce>

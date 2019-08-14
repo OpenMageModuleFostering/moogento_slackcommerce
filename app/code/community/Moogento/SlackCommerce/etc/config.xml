@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Moogento_SlackCommerce>
-            <version>0.9.2</version>
+            <version>0.9.4</version>
         </Moogento_SlackCommerce>
     </modules>
 
@@ -29,6 +29,9 @@
                     <ipfail>
                         <table>moogento_slackcommerce_ip_fail</table>
                     </ipfail>
+                    <targetfail>
+                        <table>moogento_slackcommerce_target_fail</table>
+                    </targetfail>
                 </entities>
             </moogento_slackcommerce_resource>
         </models>
@@ -173,6 +176,22 @@
                     <model>moogento_slackcommerce/cron::sendStats</model>
                 </run>
             </moogento_slackcommerce_send_stats>
+            <moogento_slackcommerce_send_security_notifications>
+                <schedule>
+                    <cron_expr>0 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>moogento_slackcommerce/cron::sendSecurityNotifications</model>
+                </run>
+            </moogento_slackcommerce_send_security_notifications>
+            <moogento_slackcommerce_motivation_message>
+                <schedule>
+                    <cron_expr>0 9 * * 1</cron_expr>
+                </schedule>
+                <run>
+                    <model>moogento_slackcommerce/cron::sendMotivationMessage</model>
+                </run>
+            </moogento_slackcommerce_motivation_message>
         </jobs>
     </crontab>
 
@@ -209,7 +228,7 @@
     <default>
         <moogento>
             <general>
-                <url>https://www.moogento.com/</url>
+                <url>https://moogento.com/</url>
             </general>
         </moogento>
         <moogento_slackcommerce>
@@ -257,6 +276,21 @@
                 <qty_products>1</qty_products>
                 <day>0</day>
             </stats>
+            <security>
+                <send_type_immediate>default</send_type_immediate>
+                <colorize_immediate>1</colorize_immediate>
+                <color_immediate>FF0000</color_immediate>
+                <send_type>default</send_type>
+                <hour>8</hour>
+                <colorize>1</colorize>
+                <color>FF0000</color>
+                <total_number_fails>1</total_number_fails>
+                <count_ip_fails>1</count_ip_fails>
+                <count_target_fails>1</count_target_fails>
+                <not_sent_if_no_fails>1</not_sent_if_no_fails>
+                <have_line_fails>1</have_line_fails>
+                <line_fails><![CDATA[Need help? See our <https://moogento.com/guides/Securing_Magento|guide to protecting Magento>. ]]></line_fails>
+            </security>
         </moogento_slackcommerce>
     </default>
 </config>

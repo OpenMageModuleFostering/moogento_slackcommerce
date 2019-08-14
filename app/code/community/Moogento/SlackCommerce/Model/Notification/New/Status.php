@@ -12,6 +12,6 @@ class Moogento_SlackCommerce_Model_Notification_New_Status extends Moogento_Slac
         if (isset($statuses[$status])) {
             $status = $statuses[$status];
         }
-        return $this->helper()->__('Order #%s assigned new status: %s', $this->_getOrder()->getIncrementId(), $status);
+        return $this->helper()->__('Order #%s : %s', $this->_getOrder()->getIncrementId(), $status);
     }
 }

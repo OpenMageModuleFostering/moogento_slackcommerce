@@ -31,10 +31,6 @@ abstract class Moogento_SlackCommerce_Model_Notification_Abstract extends Varien
         );
         $key = $this->getEventKey();
 
-        if (Mage::getStoreConfig('moogento_slackcommerce/notifications/' . $key . '_send_type') == 'custom') {
-            $data['channel'] = Mage::getStoreConfig('moogento_slackcommerce/notifications/' . $key . '_custom_channel');
-        }
-
         $referenceObject = $this->_getReferenceObject();
         $store = Mage::app()->getDefaultStoreView();
         if ($referenceObject && $referenceObject->getStoreId()) {
@@ -46,6 +42,9 @@ abstract class Moogento_SlackCommerce_Model_Notification_Abstract extends Varien
         //Start environment emulation of the specified store
         $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($store->getId());
 
+        if (Mage::getStoreConfig('moogento_slackcommerce/notifications/' . $key . '_send_type') == 'custom') {
+            $data['channel'] = Mage::getStoreConfig('moogento_slackcommerce/notifications/' . $key . '_custom_channel');
+        }
         $data['username'] = $store->getFrontendName();
 
         if (Mage::getStoreConfig('moogento_slackcommerce/general/icon')){

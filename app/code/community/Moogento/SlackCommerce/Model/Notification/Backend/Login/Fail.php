@@ -23,7 +23,7 @@ class Moogento_SlackCommerce_Model_Notification_Backend_Login_Fail extends Mooge
                 ),
                 array(
                     'title' => $this->helper()->__('IP'),
-                    'value' => $additionalData['IP'].' ('.$this->helper()->__('Country').')',
+                    'value' => $additionalData['IP']. ($additionalData['Country'] ? ' ('.$additionalData['Country'].')':''),
                     'short' => false,
                 ),
                 array(
@@ -32,8 +32,8 @@ class Moogento_SlackCommerce_Model_Notification_Backend_Login_Fail extends Mooge
                     'short' => false,
                 ),
                 array(
-                    'title' => $this->helper()->__('# Fails From This IP'),
-                    'value' => $additionalData['Even_number_of_failed_open'],
+                    'title' => $this->helper()->__('# Fails (this IP)'),
+                    'value' => (1+$additionalData['Even_number_of_failed_open']),
                     'short' => false,
                 ),
                 array(

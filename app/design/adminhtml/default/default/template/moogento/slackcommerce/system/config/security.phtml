@@ -1,0 +1,169 @@
+<?php
+$element = $this->getElement();
+$htmlId = $element->getHtmlId();
+
+if ($element->getExpanded() !== null) {
+    $collapseState = 1;
+} else {
+    $extra = Mage::getSingleton('admin/session')->getUser()->getExtra();
+    if (isset($extra['configState'][$element->getId()])) {
+        $collapseState = (int)$extra['configState'][$element->getId()];
+    } else {
+        $collapseState = 0;
+    }
+}
+
+$_cleanInstalled = Mage::helper('moogento_slackcommerce')->isInstalled('Moogento_Clean');
+
+?>
+<div class="section-config" xmlns="http://www.w3.org/1999/html">
+    <div class="entry-edit-head collapseable">
+        <a onclick="Fieldset.toggleCollapse('<?php echo $htmlId ?>', '<?php echo $this->getUrl('*/*/state/')?>'); return false;" href="#" id="<?php echo $htmlId ?>-head" class="">
+            <?php echo $element->getLegend() ?>
+        </a>
+    </div>
+    <input type="hidden" value="<?php echo $collapseState ?>" name="config_state[<?php echo $htmlId ?>]" id="<?php echo $htmlId ?>-state">
+    <fieldset id="<?php echo $htmlId ?>" class="config collapseable grid">
+        <table class="data" cellspacing="0">
+            <tbody>
+               <tr class="headings">
+                   <th style="width: 33.33%">
+                       <?php echo $this->__('Backend login fail : Immediate notification') ?>
+                   </th>
+                   <th style="width: 33.33%" data-bind="if: send_type_immediate">
+                   </th>
+                   <th style="width: 33.33%" data-bind="if: send_type_immediate">
+                       <?php echo $this->__('Highlight message?') ?>
+                   </th>
+               </tr>
+               <tr>
+                   <td>
+                       <select data-bind="chosen: {width: '200px'}, value: send_type_immediate, attr: {name: buildSecurityName('send_type_immediate')}" >
+                           <option value=""><?php echo $this->__('No') ?></option>
+                           <option value="default"><?php echo $this->__('Yes - default channel') ?></option>
+                           <option value="custom"><?php echo $this->__('Yes - custom channel') ?></option>
+                       </select>
+                       <span data-bind="visible: send_type_immediate() == 'custom'" style="display: inline-block">
+                           <input type="text" class="" data-bind="value: immediate_custom_channel, attr: {name: buildSecurityName('immediate_custom_channel')}" />
+                       </span>
+                   </td>
+                   <td data-bind="if: send_type_immediate"></td>
+                   <td data-bind="if: send_type_immediate">
+                       <span style="display: inline-block">
+                           <input type="hidden" value="0" data-bind="attr: {name: buildSecurityName('colorize_immediate')}" />
+                           <input type="checkbox" value="1" data-bind="attr: {name: buildSecurityName('colorize_immediate')}, checked: colorize_immediate, switch: colorize_immediate" />
+                       </span>
+                       <span data-bind="visible: colorize_immediate" style="display: inline-block">
+                           <input type="text" class="" data-bind="value: color_immediate, attr: {name: buildSecurityName('color_immediate')}, color: true" />
+                       </span>
+                   </td>
+               </tr>
+               <tr class="headings">
+                   <th style="width: 33.33%">
+                       <?php echo $this->__('Backend login fail : Daily summary') ?>
+                   </th>
+                   <th style="width: 33.33%" data-bind="if: send_type">
+                       <?php echo $this->__('What time?') ?>
+                   </th>
+                   <th style="width: 33.33%" data-bind="if: send_type">
+                       <?php echo $this->__('Highlight message?') ?>
+                   </th>
+               </tr>
+               <tr>
+                   <td>
+                       <select data-bind="chosen: {width: '200px'}, value: send_type, attr: {name: buildSecurityName('send_type')}" >
+                           <option value=""><?php echo $this->__('No') ?></option>
+                           <option value="default"><?php echo $this->__('Yes - default channel') ?></option>
+                           <option value="custom"><?php echo $this->__('Yes - custom channel') ?></option>
+                       </select>
+                       <span data-bind="visible: send_type() == 'custom'" style="display: inline-block">
+                           <input type="text" class="" data-bind="value: custom_channel, attr: {name: buildSecurityName('custom_channel')}" />
+                       </span>
+                   </td>
+                   <td data-bind="if: send_type">
+                       <select data-bind="chosen: {width: '200px'}, value: hour, attr: {name: buildSecurityName('hour')}" >
+                           <?php for($i = 0; $i < 24; ++$i): ?>
+                               <option value="<?php echo $i ?>"><?php echo str_pad($i, 2, '0', STR_PAD_LEFT) ?>:00</option>
+                           <?php endfor; ?>
+                       </select>
+                   </td>
+                   <td data-bind="if: send_type">
+                       <span style="display: inline-block">
+                           <input type="hidden" value="0" data-bind="attr: {name: buildSecurityName('colorize')}" />
+                           <input type="checkbox" value="1" data-bind="attr: {name: buildSecurityName('colorize')}, checked: colorize, switch: colorize" />
+                       </span>
+                       <span data-bind="visible: colorize" style="display: inline-block">
+                           <input type="text" class="" data-bind="value: color, attr: {name: buildSecurityName('color')}, color: true" />
+                       </span>
+                   </td>
+               </tr>
+                <tr class="headings" data-bind="visible: send_type">
+                    <th>
+                        <?php echo $this->__('# Fails (all IPs)') ?>
+                    </th>
+                    <th>
+                        <?php echo $this->__('# Fails (by IP)') ?>
+                    </th>
+                    <th>
+                        <?php echo $this->__('# Fails (by target)') ?>
+                    </th>
+                </tr>
+                <tr data-bind="visible: send_type">
+                    <td>
+                        <span style="display: inline-block">
+                            <input type="hidden" value="0" data-bind="attr: {name: buildSecurityName('total_number_fails')}" />
+                            <input type="checkbox" value="1" data-bind="attr: {name: buildSecurityName('total_number_fails')}, checked: total_number_fails, switch: total_number_fails" />
+                        </span>
+                    </td>
+                    <td>
+                        <span style="display: inline-block">
+                            <input type="hidden" value="0" data-bind="attr: {name: buildSecurityName('count_ip_fails')}" />
+                            <input type="checkbox" value="1" data-bind="attr: {name: buildSecurityName('count_ip_fails')}, checked: count_ip_fails, switch: count_ip_fails" />
+                        </span>
+                    </td>
+                    <td>
+                        <span style="display: inline-block">
+                            <input type="hidden" value="0" data-bind="attr: {name: buildSecurityName('count_target_fails')}" />
+                            <input type="checkbox" value="1" data-bind="attr: {name: buildSecurityName('count_target_fails')}, checked: count_target_fails, switch: count_target_fails" />
+                        </span>
+                    </td>
+                </tr>
+                <!--<tr class="headings" data-bind="visible: send_type">
+                    <th>
+                        <?php echo $this->__('Don\'t Send Empty Summary') ?>
+                    </th>
+                    <th>
+                        <?php echo $this->__('Panic Helpline') ?>
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                </tr>
+                <tr data-bind="visible: send_type">
+                    <td>
+                        <span style="display: inline-block">
+                            <input type="hidden" value="0" data-bind="attr: {name: buildSecurityName('not_sent_if_no_fails')}" />
+                            <input type="checkbox" value="1" data-bind="attr: {name: buildSecurityName('not_sent_if_no_fails')}, checked: not_sent_if_no_fails, switch: not_sent_if_no_fails" />
+                        </span>
+                    </td>
+                    <td>
+                        <span style="display: inline-block">
+                            <input type="hidden" value="0" data-bind="attr: {name: buildSecurityName('have_line_fails')}" />
+                            <input type="checkbox" value="1" data-bind="attr: {name: buildSecurityName('have_line_fails')}, checked: have_line_fails, switch: have_line_fails" />
+                        </span>
+                        <span data-bind="visible: have_line_fails" style="display: inline-block">
+                            <input type="text" class="" data-bind="value: line_fails, attr: {name: buildSecurityName('line_fails')}" />
+                        </span>
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>-->
+            </tbody>
+        </table>
+    </fieldset>
+    <script type="text/javascript">
+        Fieldset.applyCollapse('<?php echo $htmlId ?>');
+        ko.applyBindings(new SecurityConfig(<?php echo $this->_getValues() ?>), document.getElementById('<?php echo $htmlId ?>'));
+    </script>
+</div>

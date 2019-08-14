@@ -12,7 +12,7 @@ class Moogento_SlackCommerce_Model_Notification_New_Invoice extends Moogento_Sla
 
     protected function _prepareText()
     {
-        return $this->helper()->__('New invoice #%s for order #%s', $this->_getReferenceObject()->getIncrementId(), $this->_getOrder()->getIncrementId());
+        return $this->helper()->__('Invoice #%s (Order #%s)', $this->_getReferenceObject()->getIncrementId(), $this->_getOrder()->getIncrementId());
     }
 	
     protected function _trimZeros($amount) {
@@ -20,27 +20,41 @@ class Moogento_SlackCommerce_Model_Notification_New_Invoice extends Moogento_Sla
     }
 
     protected function _getAttachments() {
-        return array(
-            'fields' => array_merge(array(
-                array(
-                    'title' => $this->helper()->__('Invoice Amount'),
-                    'value' => $this->_trimZeros(strip_tags($this->_getOrder()->formatPrice($this->_getReferenceObject()->getGrandTotal()))),
-                    'short' => true,
-                ),
-            ), $this->_prepareOrderFields()),
-        );
+		$order_fields = $this->_prepareOrderFields();
+        $order_amount = $this->_prepareOrderAmount();
+		$invoice_amount = $this->_trimZeros(strip_tags($this->_getOrder()->formatPrice($this->_getReferenceObject()->getGrandTotal())));
+		if($order_amount['value'] != $invoice_amount) {
+			// Only return Invoice and Order amounts if thy don't match
+			return array(
+	            'fields' => array_merge(array(
+	                array(
+	                    'title' => $this->helper()->__('Invoiced Amount'),
+	                    'value' => $invoice_amount,
+	                    'short' => true,
+	                ),
+	            ), $order_fields),
+	        );
+		}
+		else
+		{
+	        return array(
+	            'fields' => $order_fields
+	        );
+		}
     }
 
     protected function _getProductsData()
     {
         $data = array();
-        $limit = 3;
+        $limit = 2;
+		$count = count($this->_getReferenceObject()->getAllItems());
         $i = 0;
         foreach ($this->_getReferenceObject()->getAllItems() as $item) {
-            if ($i >= $limit) break;
+            if ($i >= ($limit + 1)) break; // ie. need 2 over to show summary line (may as well show item if 1 over, instead of summary of 1)
             $data[] = $item->getQty() . ' x ' . $item->getSku();
             $i++;
         }
+		if($count > $i) $data[] = '(+ ' . ($count - $i) . ' more)';
 
         return implode("\n", $data);
     }

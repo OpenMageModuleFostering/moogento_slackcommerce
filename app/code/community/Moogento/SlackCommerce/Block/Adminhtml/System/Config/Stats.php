@@ -44,6 +44,12 @@ class Moogento_SlackCommerce_Block_Adminhtml_System_Config_Stats extends Mage_Ad
             'daily_stats' => Mage::getStoreConfig('moogento_slackcommerce/stats/daily_stats'),
             'weekly_stats' => Mage::getStoreConfig('moogento_slackcommerce/stats/weekly_stats'),
             'day' => Mage::getStoreConfig('moogento_slackcommerce/stats/day'),
+            'total_number_fails' => Mage::getStoreConfig('moogento_slackcommerce/security/total_number_fails'),
+            'count_ip_fails' => Mage::getStoreConfig('moogento_slackcommerce/security/count_ip_fails'),
+            'count_target_fails' => Mage::getStoreConfig('moogento_slackcommerce/security/count_target_fails'),
+            'not_sent_if_no_fails' => Mage::getStoreConfig('moogento_slackcommerce/security/not_sent_if_no_fails'),
+            'have_line_fails' => Mage::getStoreConfig('moogento_slackcommerce/security/have_line_fails'),
+            'line_fails' => Mage::getStoreConfig('moogento_slackcommerce/security/line_fails'),
         );
 
         return Mage::helper('core')->jsonEncode($stats);

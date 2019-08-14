@@ -25,6 +25,9 @@ if ($element->getExpanded() !== null) {
         <table class="data" cellspacing="0">
             <thead>
             <tr class="headings">
+                <?php if ($this->_showInheritCheckbox()): ?>
+                    <th style="width: 50px;"><?php echo $this->_getInheritLabel() ?></th>
+                <?php endif; ?>
                 <th style="width: 40%;">&nbsp;</th>
                 <th style="width: 30%;"><?php echo $this->__('Send to Slack?') ?></th>
                 <th style="width: 30%;"><?php echo $this->__('Highlight message?') ?></th>
@@ -32,24 +35,35 @@ if ($element->getExpanded() !== null) {
             </thead>
             <tbody data-bind="foreach: notificationsData">
                 <tr>
+                    <?php if ($this->_showInheritCheckbox()): ?>
+                        <td>
+                        <span style="display: inline-block">
+                            <input type="checkbox" value="1" data-bind="attr: {name: buildInheritName('inherit')}, checked: inherit, switch: inherit" />
+                            <input type="hidden" data-bind="attr: {name: buildInheritName('send_type')}, value: inherit" />
+                            <input type="hidden" data-bind="attr: {name: buildInheritName('custom_channel')}, value: inherit" />
+                            <input type="hidden" data-bind="attr: {name: buildInheritName('colorize')}, value: inherit" />
+                            <input type="hidden" data-bind="attr: {name: buildInheritName('color')}, value: inherit" />
+                        </span>
+                        </td>
+                    <?php endif; ?>
                     <td data-bind="text: name"></td>
                     <td>
-                        <select data-bind="chosen: {width: '200px'}, value: send_type, attr: {name: buildName('send_type')}" >
+                        <select data-bind="chosen: {width: '200px'}, value: send_type,  disable: inherit, attr: {name: buildName('send_type')}" >
                             <option value="no"><?php echo $this->__('No') ?></option>
                             <option value="default"><?php echo $this->__('Yes - default channel') ?></option>
                             <option value="custom"><?php echo $this->__('Yes - custom channel') ?></option>
                         </select>
                         <span data-bind="visible: send_type() == 'custom'" style="display: inline-block">
-                            <input type="text" class="" data-bind="value: custom_channel, attr: {name: buildName('custom_channel')}" />
+                            <input type="text" class="" data-bind="value: custom_channel,  disable: inherit, attr: {name: buildName('custom_channel')}" />
                         </span>
                     </td>
                     <td>
                         <span style="display: inline-block">
                             <input type="hidden" value="0" data-bind="attr: {name: buildName('colorize')}" />
-                            <input type="checkbox" value="1" data-bind="attr: {name: buildName('colorize')}, checked: colorize, switch: colorize" />
+                            <input type="checkbox" value="1" data-bind="attr: {name: buildName('colorize')}, disable: inherit, checked: colorize, switch: colorize" />
                         </span>
                         <span data-bind="visible: colorize" style="display: inline-block">
-                            <input type="text" class="" data-bind="value: color, attr: {name: buildName('color')}, color: true" />
+                            <input type="text" class="" data-bind="value: color, attr: {name: buildName('color')}, disable: inherit, color: true" />
                         </span>
                     </td>
                 </tr>

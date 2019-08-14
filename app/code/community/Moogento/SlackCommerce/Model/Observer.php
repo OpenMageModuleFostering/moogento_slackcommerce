@@ -58,6 +58,7 @@ class Moogento_SlackCommerce_Model_Observer
     {
         $invoice = $observer->getEvent()->getInvoice();
         if ($invoice->getData('process_notifications') && Mage::helper('moogento_slackcommerce')->shouldSend(Moogento_SlackCommerce_Model_Queue::KEY_NEW_INVOICE)) {
+            $invoice->setData('process_notifications', false);
             $queue = Mage::getModel('moogento_slackcommerce/queue');
             $queue->setData(array(
                 'event_key' => Moogento_SlackCommerce_Model_Queue::KEY_NEW_INVOICE,
@@ -174,23 +175,40 @@ class Moogento_SlackCommerce_Model_Observer
         $userName = $observer->getEvent()->getUserName();
         $ip = $_SERVER["REMOTE_ADDR"];
         $long = ip2long($ip);
+        $url_target = 'http://'. $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
         if ($long == -1 || $long === FALSE) {
             $even_attempts_number = 0;
-        } else{
+            $count_of_fails_per_day = 0;
+        } else {
             $ip_insys = Mage::getModel("moogento_slackcommerce/ipfail")->load($long, 'ip');
             if(!$ip_insys->getId()){
                 $ip_insys->setIp($long);
                 $even_attempts_number = 1;
+                $count_of_fails_per_day = 1;
             } else {
+                $count_of_fails_per_day = $ip_insys->getCountOfFailsPerDay();
                 $even_attempts_number = $ip_insys->getEvenAttemptsNumber();
+                $count_of_fails_per_day++;
                 $even_attempts_number++;
             }
+            $ip_insys->setCountOfFailsPerDay($count_of_fails_per_day);
             $ip_insys->setEvenAttemptsNumber($even_attempts_number);
             $ip_insys->save();
+            $target_insys = Mage::getModel("moogento_slackcommerce/targetfail")->load($url_target, 'target');
+            if(!$target_insys->getId()){
+                $target_insys->setTarget($url_target);
+                $count_target_fails_per_day = 1;
+            } else {
+                $count_target_fails_per_day = $target_insys->getCountOfFailsPerDay();
+                $count_target_fails_per_day++;
+            }
+            $target_insys->setCountOfFailsPerDay($count_target_fails_per_day);
+            $target_insys->save();
         }
         
         $message = $observer->getEvent()->getException()->getMessage();
-        if (Mage::helper('moogento_slackcommerce')->shouldSend(Moogento_SlackCommerce_Model_Queue::KEY_BACKEND_LOGIN_FAIL)) {
+        $sendType = Mage::getStoreConfig('moogento_slackcommerce/security/send_type_immediate');
+        if (($sendType == 'default') || ($sendType == 'custom')) {
             $queue = Mage::getModel('moogento_slackcommerce/queue');
             $queue->setData(array(
                 'event_key' => Moogento_SlackCommerce_Model_Queue::KEY_BACKEND_LOGIN_FAIL,
@@ -200,7 +218,7 @@ class Moogento_SlackCommerce_Model_Observer
                     'username' => $userName,
                     'message' => $message,
                     'IP' => $ip,
-                    'URL' => 'http://'. $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'],
+                    'URL' => $url_target,
                     'Country' => Mage::helper('moogento_slackcommerce')->ipInfo("Country"),
                     'Even_number_of_failed_open' => $even_attempts_number-1,
                 ),

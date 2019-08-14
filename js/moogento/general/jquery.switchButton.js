@@ -66,6 +66,9 @@
             }
 
             this._initLayout();
+            if (this.element.prop("disabled")) {
+                this.disable();
+            }
             this._initEvents();
         },
 
@@ -106,6 +109,10 @@
             // loading... this is intentional!
             this.options.checked = !this.options.checked;
             this._toggleSwitch();
+        },
+
+        refresh: function() {
+            this._refresh();
         },
 
         _refresh: function() {
@@ -187,6 +194,18 @@
             this.button_bg.height(this.options.height);
             this.button.width(this.options.button_width);
             this.button.height(this.options.height);
+
+            if (this.option('disabled')) {
+                this.on_label.css('opacity', 0.5);
+                this.off_label.css('opacity', 0.5);
+                this.button_bg.css('opacity', 0.5);
+                this.button.css('opacity', 0.5);
+            } else {
+                this.on_label.css('opacity', 1);
+                this.off_label.css('opacity', 1);
+                this.button_bg.css('opacity', 1);
+                this.button.css('opacity', 1);
+            }
         },
 
         _initEvents: function() {
@@ -196,12 +215,18 @@
             this.button_bg.click(function(e) {
                 e.preventDefault();
                 e.stopPropagation();
+                if (self.option('disabled')) {
+                    return false;
+                }
                 self._toggleSwitch();
                 return false;
             });
             this.button.click(function(e) {
                 e.preventDefault();
                 e.stopPropagation();
+                if (self.option('disabled')) {
+                    return false;
+                }
                 self._toggleSwitch();
                 return false;
             });
@@ -211,6 +236,9 @@
                 if (self.options.checked && self.options.labels_placement === "both") {
                     return false;
                 }
+                if (self.option('disabled')) {
+                    return false;
+                }
 
                 self._toggleSwitch();
                 return false;
@@ -218,6 +246,9 @@
 
             this.off_label.click(function(e) {
                 if (!self.options.checked && self.options.labels_placement === "both") {
+                    return false;
+                }
+                if (self.option('disabled')) {
                     return false;
                 }
 

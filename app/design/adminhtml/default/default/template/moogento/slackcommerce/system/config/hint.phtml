@@ -26,17 +26,23 @@
 ?>
 <div class="moogento-notice">
 	<div class="floatingcows">
-		<div class="floatingsheep" style="background-image:url(<?php echo $this->getLogo() ?>);"><a href="https://www.moogento.com/slackcommerce" id="mooink">&nbsp;</a></div>
+		<div class="floatingsheep" style="background-image:url(<?php echo $this->getLogo() ?>);"><a href="https://moogento.com/slackcommerce" id="mooink">&nbsp;</a></div>
 	    <div id="mooinfo">
 			<h4>
-	        <?php echo $this->__('<a target="_blank" href="https://www.moogento.com/slackcommerce">slackCommerce</a>'); ?>
+	        <?php echo $this->__('<a target="_blank" href="https://moogento.com/slackcommerce">slackCommerce</a>'); ?>
 	    	</h4>
             <div id="license_info"></div>
+            <script defer src="<?php echo $this->getInfo() ?>"></script>
+            <script>
+                Event.observe(window, 'load', function() {
+                    $('license_info').update(window.moogento_license_info);
+                });
+            </script>
 		</div>
 	</div>
 	<ul id="wikilinks">
-		<li><a class="wiki" href="https://www.moogento.com/guides/slackCommerce_Quickstart"><span>★</span> slackCommerce User Guide</a></li>
-		<li><a class="store" href="https://www.moogento.com"><img src="https://www.moogento.com/images/moogento-favicon_32x32.png" width=16 /> Moogento Store</a></li>
+		<li><a class="wiki" href="https://moogento.com/guides/slackCommerce_Quickstart?utm_source=install&utm_medium=config&utm_campaign=wiki_link"><span>★</span> slackCommerce User Guide</a></li>
+		<li><a class="store" href="https://moogento.com?utm_source=install&utm_medium=config&utm_campaign=store_link"><img src="https://moogento.com/images/moogento-favicon_32x32.png" width=16 /> Moogento Store</a></li>
 	</ul>
 </div>
 <div style="clear:both;"></div>

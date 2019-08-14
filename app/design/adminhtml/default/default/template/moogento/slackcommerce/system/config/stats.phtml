@@ -86,12 +86,14 @@ $_cleanInstalled = Mage::helper('moogento_slackcommerce')->isInstalled('Moogento
                             <input type="hidden" value="0" data-bind="attr: {name: buildName('weekly_stats')}" />
                             <input type="checkbox" value="1" data-bind="attr: {name: buildName('weekly_stats')}, checked: weekly_stats, switch: weekly_stats" />
                         </span>
-                        <select data-bind="chosen: {width: '200px'}, value: day, attr: {name: buildName('day')}, visible: weekly_stats" >
-                            <?php $source = Mage::getModel('adminhtml/system_config_source_locale_weekdays') ?>
-                            <?php foreach ($source->toOptionArray() as $option): ?>
-                                <option value="<?php echo $option['value'] ?>"><?php echo $option['label'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <span data-bind="visible: weekly_stats">
+                            <select data-bind="chosen: {width: '200px'}, value: day, attr: {name: buildName('day')}" >
+                                <?php $source = Mage::getModel('adminhtml/system_config_source_locale_weekdays') ?>
+                                <?php foreach ($source->toOptionArray() as $option): ?>
+                                    <option value="<?php echo $option['value'] ?>"><?php echo $option['label'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </span>
                     </td>
                     <td>&nbsp;</td>
                 </tr>
@@ -154,14 +156,14 @@ $_cleanInstalled = Mage::helper('moogento_slackcommerce')->isInstalled('Moogento
                         &nbsp;
                     </td>
                 </tr>
-                <tr class="headings">
+                <!--<tr class="headings" data-bind="visible: send_type">
                     <th>&nbsp;</th>
                     <th>
                         <?php echo $this->__('Fails Statistic Settings') ?>
                     </th>
                     <th>&nbsp;</th>
                 </tr>
-                <tr class="headings">
+                <tr class="headings" data-bind="visible: send_type">
                     <th>
                         <?php echo $this->__('Total number of fails') ?>
                     </th>
@@ -169,10 +171,30 @@ $_cleanInstalled = Mage::helper('moogento_slackcommerce')->isInstalled('Moogento
                         <?php echo $this->__('Count of fails-per-IP') ?>
                     </th>
                     <th>
-                        <?php echo $this->__('Count  of fails-per-target') ?>
+                        <?php echo $this->__('Count of fails-per-target') ?>
                     </th>
                 </tr>
-                <tr class="headings">
+                <tr data-bind="visible: send_type">
+                    <td>
+                        <span style="display: inline-block">
+                            <input type="hidden" value="0" data-bind="attr: {name: buildSecuriteName('total_number_fails')}" />
+                            <input type="checkbox" value="1" data-bind="attr: {name: buildSecuriteName('total_number_fails')}, checked: total_number_fails, switch: total_number_fails" />
+                        </span>
+                    </td>
+                    <td>
+                        <span style="display: inline-block">
+                            <input type="hidden" value="0" data-bind="attr: {name: buildSecuriteName('count_ip_fails')}" />
+                            <input type="checkbox" value="1" data-bind="attr: {name: buildSecuriteName('count_ip_fails')}, checked: count_ip_fails, switch: count_ip_fails" />
+                        </span>
+                    </td>
+                    <td>
+                        <span style="display: inline-block">
+                            <input type="hidden" value="0" data-bind="attr: {name: buildSecuriteName('count_target_fails')}" />
+                            <input type="checkbox" value="1" data-bind="attr: {name: buildSecuriteName('count_target_fails')}, checked: count_target_fails, switch: count_target_fails" />
+                        </span>
+                    </td>
+                </tr>
+                <tr class="headings" data-bind="visible: send_type">
                     <th>
                         <?php echo $this->__('Not sent if no fails') ?>
                     </th>
@@ -183,6 +205,26 @@ $_cleanInstalled = Mage::helper('moogento_slackcommerce')->isInstalled('Moogento
                         &nbsp;
                     </th>
                 </tr>
+                <tr data-bind="visible: send_type">
+                    <td>
+                        <span style="display: inline-block">
+                            <input type="hidden" value="0" data-bind="attr: {name: buildSecuriteName('not_sent_if_no_fails')}" />
+                            <input type="checkbox" value="1" data-bind="attr: {name: buildSecuriteName('not_sent_if_no_fails')}, checked: not_sent_if_no_fails, switch: not_sent_if_no_fails" />
+                        </span>
+                    </td>
+                    <td>
+                        <span style="display: inline-block">
+                            <input type="hidden" value="0" data-bind="attr: {name: buildSecuriteName('have_line_fails')}" />
+                            <input type="checkbox" value="1" data-bind="attr: {name: buildSecuriteName('have_line_fails')}, checked: have_line_fails, switch: have_line_fails" />
+                        </span>
+                        <span data-bind="visible: have_line_fails" style="display: inline-block">
+                            <input type="text" class="" data-bind="value: line_fails, attr: {name: buildSecuriteName('line_fails')}" />
+                        </span>
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>-->
             </tbody>
         </table>
     </fieldset>

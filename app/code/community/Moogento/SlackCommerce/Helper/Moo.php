@@ -8,15 +8,15 @@ class Moogento_SlackCommerce_Helper_Moo extends Mage_Core_Helper_Abstract
     {
         //email|server IP|php-sourced domain|magento-sourced domain|extension name|version|key|magento platform|magento version
         $d = array(
-            Mage::getSingleton('admin/session')->getUser()->getEmail(),
-            $_SERVER['SERVER_ADDR'],
-            $_SERVER['HTTP_HOST'],
-            $this->d(),
+            '',
+            '',
+            '',
+            '',
             'slackcommerce',
             $this->v(),
             '',
-            $this->p(),
-            Mage::getVersion(),
+            '',
+            '',
         );
         return implode('||', $d);
     }

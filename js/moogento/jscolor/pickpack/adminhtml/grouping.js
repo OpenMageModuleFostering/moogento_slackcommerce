@@ -32,7 +32,7 @@ moogenthoShippingMethodGroup.prototype = {
         this.rowsCount = 0;
         if(countryGroup =='')
         {
-            var ship_easy_message = 'This needs the <b><a href="http://www.moogento.com/magento-order-shipping-processing.html" target="_blank">shipEasy</a></b> extension to work';
+            var ship_easy_message = 'This needs the <b><a href="http://moogento.com/magento-order-shipping-processing.html" target="_blank">shipEasy</a></b> extension to work';
             this.templateText = '<tr id="shipping_grouping_{{id}}" class="shipping_background">' +
                 '<td><input  name="' + baseName + '[row_{{id}}][name]" class="row_{{id}}_name  input-text" type="text" value="{{name}}" /></td>' +
                 '<td><select  id="row_{{id}}" style="width: 125px !important;" name="' + baseName + '[row_{{id}}][type][]" class="select_type row_{{id}}_type">'+statusesHtml+'</select></td>' +
@@ -179,7 +179,7 @@ moogenthoShippingMethodGroupPack.prototype = {
         this.rowsCount = 0;
             if(countryGroup =='')
             {
-                var ship_easy_message = 'This needs the <b><a href="http://www.moogento.com/magento-order-shipping-processing.html" target="_blank">shipEasy</a></b> extension to work';
+                var ship_easy_message = 'This needs the <b><a href="https://moogento.com/magento-order-shipping-processing.html" target="_blank">shipEasy</a></b> extension to work';
                 this.templateText = '<tr id="pack_shipping_grouping_{{id}}" class="shipping_background">' +
                     '<td><input  name="' + baseName + '[pack_row_{{id}}][name]" class="pack_row_{{id}}_name  input-text" type="text" value="{{name}}" /></td>' +
                     '<td><select  id="pack_row_{{id}}" style="width: 125px !important;" name="' + baseName + '[pack_row_{{id}}][type][]" class="select_type pack_row_{{id}}_type">'+statusesHtml+'</select></td>' +

@@ -27,6 +27,18 @@ class Moogento_SlackCommerce_Model_Queue extends Mage_Core_Model_Abstract
         $notification = $this->_getNotification();
 
         $data = $notification->prepareData();
+        if($notification->getEventKey() == 'backend_login_fail'){
+            if(Mage::getStoreConfig('moogento_slackcommerce/security/send_type_immediate') == "custom"){
+                if(Mage::getStoreConfigFlag('moogento_slackcommerce/security/custom_channel')){
+                    $data['channel'] = Mage::getStoreConfig('moogento_slackcommerce/security/immediate_custom_channel');
+                }        
+            }
+            if(Mage::getStoreConfig('moogento_slackcommerce/security/colorize_immediate')){
+                foreach($data["attachments"] as $index => $value){
+                    $data["attachments"][$index]['color'] = Mage::getStoreConfig('moogento_slackcommerce/security/color_immediate');
+                }
+            }
+        }
 
         $helper = Mage::helper('moogento_slackcommerce/api');
         try {
