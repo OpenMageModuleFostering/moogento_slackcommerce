@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <moogento translate="label">
+            <label>
+                <![CDATA[<img src="//www.moogento.com/logo/moogento_tinylogo.lp.png" alt="Moogento" width="20" style="vertical-align:bottom;margin-left:-1px;"/> MOOGENTO Extensions
+				]]>
+            </label>
+            <sort_order>300</sort_order>
+        </moogento>
+    </tabs>
+
+    <sections>
+        <moogento_slackcommerce translate="label" module="moogento_slackcommerce">
+            <label><![CDATA[slackCommerce]]></label>
+			<header_css>moogento-header</header_css>
+            <tab>moogento</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>5600</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <hint>
+                    <frontend_model>moogento_slackcommerce/adminhtml_system_config_hint</frontend_model>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                </hint>
+                <general translate="label" module="moogento_slackcommerce">
+                    <label>Slack Connection</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <webhook_url translate="label" module="moogento_slackcommerce">
+                            <label><![CDATA[Incoming Webhook URL]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[To get this:<br/>
+							<b>1.</b> Log into your Slack account<br/>
+							<b>2.</b> Go to the channel you want the Magento notifcations to get posted to (or create one)<br/>
+							<b>3.</b> In that channel, click '+ Add a service integration'<br/>
+							<b>4.</b> At the bottom of the page you're redirected to, click 'View' next to 'Incoming WebHooks'<br/>
+							<b>5.</b> Click the big green button :) and you'll then see the Webhook URL : copy that and paste it here.]]></comment>
+                        </webhook_url>
+                        <default_channel translate="label" module="moogento_slackcommerce">
+                            <label><![CDATA[Default Channel]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+							<comment><![CDATA[Set this to a channel already setup in your Slack account<br />Eg. <b>#orders</b>]]></comment>
+                        </default_channel>
+                        <default_channel_fails translate="label" module="moogento_slackcommerce">
+                            <label><![CDATA[Default Fails Channel]]></label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+							<comment><![CDATA[Set this to a channel already setup in your Slack account<br />Eg. <b>#orders</b>]]></comment>
+                        </default_channel_fails>
+                        <test_connection translate="label">
+                            <label></label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>moogento_slackcommerce/adminhtml_system_config_form_button_test</frontend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[You need to save changes before testing]]></comment>
+                        </test_connection>
+                        <icon translate="label comment" module="moogento_slackcommerce">
+                            <label>Notification Icon</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>moogento_slackcommerce/adminhtml_system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">moogento/slack</upload_dir>
+                            <base_url type="media" scope_info="0">moogento/slack</base_url>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>This shows up in your slack channel, make it a square transparent .png for best results (100px x 100px)</comment>
+                        </icon>
+                    </fields>
+                </general>
+
+
+
+                <notifications translate="label" module="moogento_slackcommerce">
+                    <label>Event Notifications</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>110</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <frontend_model>moogento_slackcommerce/adminhtml_system_config_notifications</frontend_model>
+                </notifications>
+
+                <stats translate="label" module="moogento_slackcommerce">
+                    <label>Metrics Notifications</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>120</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <frontend_model>moogento_slackcommerce/adminhtml_system_config_stats</frontend_model>
+                </stats>
+
+            </groups>
+        </moogento_slackcommerce>
+    </sections>
+</config>

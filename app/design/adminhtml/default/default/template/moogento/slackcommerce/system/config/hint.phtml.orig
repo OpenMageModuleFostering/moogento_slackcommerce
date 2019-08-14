@@ -1,0 +1,48 @@
+<?php
+/** 
+* Moogento
+* 
+* SOFTWARE LICENSE
+* 
+* This source file is covered by the Moogento End User License Agreement
+* that is bundled with this extension in the file License.html
+* It is also available online here:
+* http://www.moogento.com/License.html
+* 
+* NOTICE
+* 
+* If you customize this file please remember that it will be overwrtitten
+* with any future upgrade installs. 
+* If you'd like to add a feature which is not in this software, get in touch
+* at www.moogento.com for a quote.
+* 
+* ID          pe+sMEDTrtCzNq3pehW9DJ0lnYtgqva4i4Z=
+* File        hint.phtml
+* @category   Moogento
+* @package    slackCommerce
+* @copyright  Copyright (c) 2015 Moogento <info@moogento.com> / All rights reserved.
+* @license    http://www.moogento.com/License.html
+*/ 
+?>
+<div class="moogento-notice">
+	<div class="floatingcows">
+		<div class="floatingsheep" style="background-image:url(<?php echo $this->getLogo() ?>);"><a href="https://www.moogento.com/slackcommerce" id="mooink">&nbsp;</a></div>
+	    <div id="mooinfo">
+			<h4>
+	        <?php echo $this->__('<a target="_blank" href="https://www.moogento.com/slackcommerce">slackCommerce</a>'); ?>
+	    	</h4>
+            <div id="license_info"></div>
+		</div>
+	</div>
+<<<<<<< mine
+	<ul id="wikilinks">
+		<li><a class="wiki" href="https://www.moogento.com/guides/slackCommerce_Quickstart"><span>★</span> slackCommerce User Guide</a></li>
+		<li><a class="store" href="https://www.moogento.com"><img src="https://www.moogento.com/images/moogento-favicon_32x32.png" width=16 /> Moogento Store</a></li>
+	</ul>
+=======
+    <ul id="wikilinks">
+        <li><a class="store" href="https://www.moogento.com"><img src="https://www.moogento.com/images/moogento-favicon_32x32.png" width=16 /> Moogento Store</a></li>
+    </ul>
+>>>>>>> theirs
+</div>
+<div style="clear:both;"></div>

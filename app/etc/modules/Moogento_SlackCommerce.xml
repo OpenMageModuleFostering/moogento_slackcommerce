@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Moogento_SlackCommerce>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Moogento_SlackCommerce>
+    </modules>
+</config>

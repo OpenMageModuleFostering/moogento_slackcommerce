@@ -1,0 +1,262 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Moogento_SlackCommerce>
+            <version>0.9.2</version>
+        </Moogento_SlackCommerce>
+    </modules>
+
+    <global>
+        <helpers>
+            <moogento_slackcommerce>
+                <class>Moogento_SlackCommerce_Helper</class>
+            </moogento_slackcommerce>
+        </helpers>
+
+        <models>
+            <moogento_slackcommerce>
+                <class>Moogento_SlackCommerce_Model</class>
+                <resourceModel>moogento_slackcommerce_resource</resourceModel>
+            </moogento_slackcommerce>
+
+            <moogento_slackcommerce_resource>
+                <class>Moogento_SlackCommerce_Model_Resource</class>
+                <entities>
+                    <queue>
+                        <table>moogento_slackcommerce_queue</table>
+                    </queue>
+                    <ipfail>
+                        <table>moogento_slackcommerce_ip_fail</table>
+                    </ipfail>
+                </entities>
+            </moogento_slackcommerce_resource>
+        </models>
+
+        <blocks>
+            <moogento_slackcommerce>
+                <class>Moogento_SlackCommerce_Block</class>
+            </moogento_slackcommerce>
+        </blocks>
+
+        <resources>
+            <moogento_slackcommerce_setup>
+                <setup>
+                    <module>Moogento_SlackCommerce</module>
+                    <class>Moogento_SlackCommerce_Model_Resource_Setup</class>
+                </setup>
+            </moogento_slackcommerce_setup>
+        </resources>
+
+        <events>
+            <sales_order_place_after>
+                <observers>
+                    <moogento_slackcommerce>
+                        <class>moogento_slackcommerce/observer</class>
+                        <method>sales_order_place_after</method>
+                    </moogento_slackcommerce>
+                </observers>
+            </sales_order_place_after>
+
+            <sales_order_save_after>
+                <observers>
+                    <moogento_slackcommerce>
+                        <class>moogento_slackcommerce/observer</class>
+                        <method>sales_order_save_after</method>
+                    </moogento_slackcommerce>
+                </observers>
+            </sales_order_save_after>
+
+            <sales_order_invoice_save_before>
+                <observers>
+                    <moogento_slackcommerce>
+                        <class>moogento_slackcommerce/observer</class>
+                        <method>sales_order_invoice_save_before</method>
+                    </moogento_slackcommerce>
+                </observers>
+            </sales_order_invoice_save_before>
+            <sales_order_invoice_save_after>
+                <observers>
+                    <moogento_slackcommerce>
+                        <class>moogento_slackcommerce/observer</class>
+                        <method>sales_order_invoice_save_after</method>
+                    </moogento_slackcommerce>
+                </observers>
+            </sales_order_invoice_save_after>
+
+            <sales_order_shipment_save_before>
+                <observers>
+                    <moogento_slackcommerce>
+                        <class>moogento_slackcommerce/observer</class>
+                        <method>sales_order_shipment_save_before</method>
+                    </moogento_slackcommerce>
+                </observers>
+            </sales_order_shipment_save_before>
+            <sales_order_shipment_save_after>
+                <observers>
+                    <moogento_slackcommerce>
+                        <class>moogento_slackcommerce/observer</class>
+                        <method>sales_order_shipment_save_after</method>
+                    </moogento_slackcommerce>
+                </observers>
+            </sales_order_shipment_save_after>
+
+            <sales_order_creditmemo_save_before>
+                <observers>
+                    <moogento_slackcommerce>
+                        <class>moogento_slackcommerce/observer</class>
+                        <method>sales_order_creditmemo_save_before</method>
+                    </moogento_slackcommerce>
+                </observers>
+            </sales_order_creditmemo_save_before>
+            <sales_order_creditmemo_save_after>
+                <observers>
+                    <moogento_slackcommerce>
+                        <class>moogento_slackcommerce/observer</class>
+                        <method>sales_order_creditmemo_save_after</method>
+                    </moogento_slackcommerce>
+                </observers>
+            </sales_order_creditmemo_save_after>
+
+            <admin_user_save_before>
+                <observers>
+                    <moogento_slackcommerce>
+                        <class>moogento_slackcommerce/observer</class>
+                        <method>admin_user_save_before</method>
+                    </moogento_slackcommerce>
+                </observers>
+            </admin_user_save_before>
+            <admin_user_save_after>
+                <observers>
+                    <moogento_slackcommerce>
+                        <class>moogento_slackcommerce/observer</class>
+                        <method>admin_user_save_after</method>
+                    </moogento_slackcommerce>
+                </observers>
+            </admin_user_save_after>
+
+            <admin_session_user_login_success>
+                <observers>
+                    <moogento_slackcommerce>
+                        <class>moogento_slackcommerce/observer</class>
+                        <method>admin_session_user_login_success</method>
+                    </moogento_slackcommerce>
+                </observers>
+            </admin_session_user_login_success>
+
+            <admin_session_user_login_failed>
+                <observers>
+                    <moogento_slackcommerce>
+                        <class>moogento_slackcommerce/observer</class>
+                        <method>admin_session_user_login_failed</method>
+                    </moogento_slackcommerce>
+                </observers>
+            </admin_session_user_login_failed>
+        </events>
+    </global>
+
+    <crontab>
+        <jobs>
+            <moogento_slackcommerce_send>
+                <schedule>
+                    <cron_expr>* * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>moogento_slackcommerce/cron::send</model>
+                </run>
+            </moogento_slackcommerce_send>
+            <moogento_slackcommerce_send_stats>
+                <schedule>
+                    <cron_expr>0 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>moogento_slackcommerce/cron::sendStats</model>
+                </run>
+            </moogento_slackcommerce_send_stats>
+        </jobs>
+    </crontab>
+
+    <adminhtml>
+        <events>
+
+        </events>
+
+        <layout>
+            <updates>
+                <moogento_slackcommerce>
+                    <file>moogento/slackcommerce.xml</file>
+                </moogento_slackcommerce>
+            </updates>
+        </layout>
+    </adminhtml>
+
+    <crontab>
+        <jobs>
+        </jobs>
+    </crontab>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <moogento_slackcommerce before="Mage_Adminhtml">Moogento_SlackCommerce_Adminhtml</moogento_slackcommerce>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <default>
+        <moogento>
+            <general>
+                <url>https://www.moogento.com/</url>
+            </general>
+        </moogento>
+        <moogento_slackcommerce>
+            <general>
+                <icon>moogento_logo_small.png</icon>
+            </general>
+            <notifications>
+                <new_order_send_type>default</new_order_send_type>
+                <new_order_colorize>1</new_order_colorize>
+                <new_order_color>C1FFBA</new_order_color>
+
+                <new_status_fraud_send_type>default</new_status_fraud_send_type>
+                <new_status_fraud_colorize>1</new_status_fraud_colorize>
+                <new_status_fraud_color>FF9696</new_status_fraud_color>
+
+                <new_status_payment_review_send_type>default</new_status_payment_review_send_type>
+                <new_status_payment_review_colorize>1</new_status_payment_review_colorize>
+                <new_status_payment_review_color>FF9696</new_status_payment_review_color>
+
+                <new_status_paypal_canceled_reversal_send_type>default</new_status_paypal_canceled_reversal_send_type>
+                <new_status_paypal_canceled_reversal_colorize>1</new_status_paypal_canceled_reversal_colorize>
+                <new_status_paypal_canceled_reversal_color>FF9696</new_status_paypal_canceled_reversal_color>
+
+                <new_status_paypal_reversed_send_type>default</new_status_paypal_reversed_send_type>
+                <new_status_paypal_reversed_colorize>1</new_status_paypal_reversed_colorize>
+                <new_status_paypal_reversed_color>FF9696</new_status_paypal_reversed_color>
+
+                <backend_login_send_type>default</backend_login_send_type>
+                <backend_login_colorize>1</backend_login_colorize>
+                <backend_login_color>CCCCCC</backend_login_color>
+
+                <backend_login_fail_send_type>default</backend_login_fail_send_type>
+                <backend_login_fail_colorize>1</backend_login_fail_colorize>
+                <backend_login_fail_color>FFDB9E</backend_login_fail_color>
+            </notifications>
+            <stats>
+                <send_type>default</send_type>
+                <hour>18</hour>
+                <colorize>1</colorize>
+                <color>8CF4FF</color>
+                <daily_stats>1</daily_stats>
+                <weekly_stats>1</weekly_stats>
+                <qty_orders>1</qty_orders>
+                <total_revenue>1</total_revenue>
+                <qty_products>1</qty_products>
+                <day>0</day>
+            </stats>
+        </moogento_slackcommerce>
+    </default>
+</config>
